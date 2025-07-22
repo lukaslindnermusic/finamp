@@ -95,7 +95,9 @@ class ItemCollectionListTile extends ConsumerWidget {
     }
 
     final additionalBaseItemInfos = ref.watch(finampSettingsProvider.additionalBaseItemInfo);
-    final additionalBaseItemInfo = additionalBaseItemInfos[itemType] ?? AdditionalBaseItemInfoTypes.adaptive;
+    final additionalBaseItemInfo = (itemType == BaseItemDtoType.album && albumShowsYearAndDurationInstead)
+        ? AdditionalBaseItemInfoTypes.none
+        : (additionalBaseItemInfos[itemType] ?? AdditionalBaseItemInfoTypes.adaptive);
 
     SortBy? additionalInfoSortBy = switch (additionalBaseItemInfo) {
       AdditionalBaseItemInfoTypes.dateReleased => SortBy.dateCreated,
