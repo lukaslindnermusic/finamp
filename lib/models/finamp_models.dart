@@ -227,7 +227,6 @@ class DefaultSettings {
   };
 }
 
-
 @HiveType(typeId: 28)
 class FinampSettings {
   FinampSettings({
@@ -3327,11 +3326,11 @@ enum AdditionalBaseItemInfoTypes {
       case AdditionalBaseItemInfoTypes.dateReleased:
         return AppLocalizations.of(context)!.premiereDate;
       case AdditionalBaseItemInfoTypes.duration:
-        return  AppLocalizations.of(context)!.duration;
+        return AppLocalizations.of(context)!.duration;
       case AdditionalBaseItemInfoTypes.playCount:
-        return  AppLocalizations.of(context)!.playCount;
+        return AppLocalizations.of(context)!.playCount;
       case AdditionalBaseItemInfoTypes.dateLastPlayed:
-        return  AppLocalizations.of(context)!.datePlayed;
+        return AppLocalizations.of(context)!.datePlayed;
       case AdditionalBaseItemInfoTypes.none:
         return AppLocalizations.of(context)!.none;
     }
