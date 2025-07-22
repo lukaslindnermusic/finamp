@@ -380,6 +380,16 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
         clearQueueOnStopEvent: fields[117] == null
             ? false
             : fields[117] as bool,
+        additionalBaseItemInfo: fields[120] == null
+            ? {
+                BaseItemDtoType.track: AdditionalBaseItemInfoTypes.adaptive,
+                BaseItemDtoType.album: AdditionalBaseItemInfoTypes.adaptive,
+                BaseItemDtoType.artist: AdditionalBaseItemInfoTypes.adaptive,
+                BaseItemDtoType.playlist: AdditionalBaseItemInfoTypes.adaptive,
+                BaseItemDtoType.genre: AdditionalBaseItemInfoTypes.adaptive,
+              }
+            : (fields[120] as Map)
+                  .cast<BaseItemDtoType, AdditionalBaseItemInfoTypes>(),
       )
       ..disableGesture = fields[19] == null ? false : fields[19] as bool
       ..showFastScroller = fields[25] == null ? true : fields[25] as bool
@@ -391,7 +401,7 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
   @override
   void write(BinaryWriter writer, FinampSettings obj) {
     writer
-      ..writeByte(113)
+      ..writeByte(114)
       ..writeByte(0)
       ..write(obj.isOffline)
       ..writeByte(1)
@@ -617,7 +627,9 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
       ..writeByte(118)
       ..write(obj.playbackPitch)
       ..writeByte(119)
-      ..write(obj.syncPlaybackSpeedAndPitch);
+      ..write(obj.syncPlaybackSpeedAndPitch)
+      ..writeByte(120)
+      ..write(obj.additionalBaseItemInfo);
   }
 
   @override
@@ -2702,6 +2714,64 @@ class SleepTimerTypeAdapter extends TypeAdapter<SleepTimerType> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is SleepTimerTypeAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class AdditionalBaseItemInfoTypesAdapter
+    extends TypeAdapter<AdditionalBaseItemInfoTypes> {
+  @override
+  final typeId = 100;
+
+  @override
+  AdditionalBaseItemInfoTypes read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return AdditionalBaseItemInfoTypes.adaptive;
+      case 1:
+        return AdditionalBaseItemInfoTypes.dateAdded;
+      case 2:
+        return AdditionalBaseItemInfoTypes.dateReleased;
+      case 3:
+        return AdditionalBaseItemInfoTypes.duration;
+      case 4:
+        return AdditionalBaseItemInfoTypes.playCount;
+      case 5:
+        return AdditionalBaseItemInfoTypes.dateLastPlayed;
+      case 6:
+        return AdditionalBaseItemInfoTypes.none;
+      default:
+        return AdditionalBaseItemInfoTypes.adaptive;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, AdditionalBaseItemInfoTypes obj) {
+    switch (obj) {
+      case AdditionalBaseItemInfoTypes.adaptive:
+        writer.writeByte(0);
+      case AdditionalBaseItemInfoTypes.dateAdded:
+        writer.writeByte(1);
+      case AdditionalBaseItemInfoTypes.dateReleased:
+        writer.writeByte(2);
+      case AdditionalBaseItemInfoTypes.duration:
+        writer.writeByte(3);
+      case AdditionalBaseItemInfoTypes.playCount:
+        writer.writeByte(4);
+      case AdditionalBaseItemInfoTypes.dateLastPlayed:
+        writer.writeByte(5);
+      case AdditionalBaseItemInfoTypes.none:
+        writer.writeByte(6);
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AdditionalBaseItemInfoTypesAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -1002,6 +1002,16 @@ extension FinampSetters on FinampSettingsHelper {
     ).put("FinampSettings", finampSettingsTemp);
   }
 
+  static void setAdditionalBaseItemInfo(
+    Map<BaseItemDtoType, AdditionalBaseItemInfoTypes> newAdditionalBaseItemInfo,
+  ) {
+    FinampSettings finampSettingsTemp = FinampSettingsHelper.finampSettings;
+    finampSettingsTemp.additionalBaseItemInfo = newAdditionalBaseItemInfo;
+    Hive.box<FinampSettings>(
+      "FinampSettings",
+    ).put("FinampSettings", finampSettingsTemp);
+  }
+
   static void setBufferDuration(Duration newBufferDuration) {
     FinampSettings finampSettingsTemp = FinampSettingsHelper.finampSettings;
     finampSettingsTemp.bufferDuration = newBufferDuration;
@@ -1367,6 +1377,10 @@ extension FinampSettingsProviderSelectors on StreamProvider<FinampSettings> {
       finampSettingsProvider.select(
         (value) => value.requireValue.syncPlaybackSpeedAndPitch,
       );
+  ProviderListenable<Map<BaseItemDtoType, AdditionalBaseItemInfoTypes>>
+  get additionalBaseItemInfo => finampSettingsProvider.select(
+    (value) => value.requireValue.additionalBaseItemInfo,
+  );
   ProviderListenable<DownloadProfile> get downloadTranscodingProfile =>
       finampSettingsProvider.select(
         (value) => value.requireValue.downloadTranscodingProfile,
