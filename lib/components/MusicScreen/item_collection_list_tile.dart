@@ -100,7 +100,7 @@ class ItemCollectionListTile extends ConsumerWidget {
         : (additionalBaseItemInfos[itemType] ?? AdditionalBaseItemInfoTypes.adaptive);
 
     SortBy? additionalInfoSortBy = switch (additionalBaseItemInfo) {
-      AdditionalBaseItemInfoTypes.dateReleased => SortBy.dateCreated,
+      AdditionalBaseItemInfoTypes.dateReleased => SortBy.premiereDate,
       AdditionalBaseItemInfoTypes.dateAdded => SortBy.dateCreated,
       AdditionalBaseItemInfoTypes.duration => SortBy.runtime,
       AdditionalBaseItemInfoTypes.none => null,
