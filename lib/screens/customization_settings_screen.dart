@@ -41,7 +41,7 @@ class _CustomizationSettingsScreenState extends State<CustomizationSettingsScree
           const ShowSeekControlsOnMediaNotificationToggle(),
           const OneLineMarqueeTextSwitch(),
           const ReleaseDateFormatDropdownListTile(),
-          const AdditionalBaseItemInfoTitle(),
+          const AdditionalBaseItemInfoTitleListTile(),
           const AdditionalBaseItemInfoDropdownListTile(baseItemDtoType: BaseItemDtoType.track),
           const AdditionalBaseItemInfoDropdownListTile(baseItemDtoType: BaseItemDtoType.album),
           const AdditionalBaseItemInfoDropdownListTile(baseItemDtoType: BaseItemDtoType.artist),

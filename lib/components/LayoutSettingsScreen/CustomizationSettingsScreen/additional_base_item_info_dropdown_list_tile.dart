@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../models/finamp_models.dart';
 import '../../../services/finamp_settings_helper.dart';
 
-class AdditionalBaseItemInfoTitle extends ConsumerWidget {
-  const AdditionalBaseItemInfoTitle({super.key});
+class AdditionalBaseItemInfoTitleListTile extends ConsumerWidget {
+  const AdditionalBaseItemInfoTitleListTile({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
