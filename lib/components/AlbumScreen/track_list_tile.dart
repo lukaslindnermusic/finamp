@@ -611,22 +611,17 @@ class TrackListItemTile extends ConsumerWidget {
         ? AdditionalBaseItemInfoTypes.none
         : (additionalBaseItemInfos[BaseItemDtoType.track] ?? AdditionalBaseItemInfoTypes.adaptive);
 
-    bool showPlayCount =
-        (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.playCount ||
-        (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.adaptive &&
-            adaptiveAdditionalInfoSortBy == SortBy.playCount));
-    bool showReleaseDate =
-        (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateReleased ||
-        (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.adaptive &&
-            adaptiveAdditionalInfoSortBy == SortBy.premiereDate));
-    bool showDateAdded =
-        (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateAdded ||
-        (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.adaptive &&
-            adaptiveAdditionalInfoSortBy == SortBy.dateCreated));
-    bool showDateLastPlayed =
-        (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateLastPlayed ||
-        (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.adaptive &&
-            adaptiveAdditionalInfoSortBy == SortBy.datePlayed));
+    bool showPlayCount = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.playCount;
+    bool showReleaseDate = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateReleased;
+    bool showDateAdded = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateAdded;
+    bool showDateLastPlayed = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateLastPlayed;
+
+    if (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.adaptive) {
+      showPlayCount = showPlayCount || adaptiveAdditionalInfoSortBy == SortBy.playCount;
+      showReleaseDate = showReleaseDate || adaptiveAdditionalInfoSortBy == SortBy.premiereDate;
+      showDateAdded = showDateAdded || adaptiveAdditionalInfoSortBy == SortBy.dateCreated;
+      showDateLastPlayed = showDateLastPlayed || adaptiveAdditionalInfoSortBy == SortBy.datePlayed;
+    }
 
     final bool secondRowNeeded =
         showArtists || showAlbum || showPlayCount || showReleaseDate || showDateAdded || showDateLastPlayed;
