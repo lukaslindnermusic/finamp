@@ -606,10 +606,10 @@ class TrackListItemTile extends ConsumerWidget {
     final additionalBaseItemInfos = ref.watch(finampSettingsProvider.additionalBaseItemInfo);
     final additionalBaseItemInfo =
         (isOffline &&
-            (additionalBaseItemInfos[BaseItemDtoType.track] == AdditionalBaseItemInfoTypes.dateLastPlayed ||
-                additionalBaseItemInfos[BaseItemDtoType.track] == AdditionalBaseItemInfoTypes.playCount))
+            (additionalBaseItemInfos[TabContentType.tracks] == AdditionalBaseItemInfoTypes.dateLastPlayed ||
+                additionalBaseItemInfos[TabContentType.tracks] == AdditionalBaseItemInfoTypes.playCount))
         ? AdditionalBaseItemInfoTypes.none
-        : (additionalBaseItemInfos[BaseItemDtoType.track] ?? AdditionalBaseItemInfoTypes.adaptive);
+        : (additionalBaseItemInfos[TabContentType.tracks] ?? AdditionalBaseItemInfoTypes.adaptive);
 
     bool showPlayCount = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.playCount;
     bool showReleaseDate = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateReleased;

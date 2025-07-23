@@ -94,10 +94,18 @@ class ItemCollectionListTile extends ConsumerWidget {
       );
     }
 
+    TabContentType? associatedTabContentType;
+    try {
+      associatedTabContentType = TabContentType.fromItemType(itemType.idString ?? "");
+    } on FormatException {
+      associatedTabContentType = null;
+    }
+
     final additionalBaseItemInfos = ref.watch(finampSettingsProvider.additionalBaseItemInfo);
-    final additionalBaseItemInfo = (itemType == BaseItemDtoType.album && albumShowsYearAndDurationInstead)
+    final additionalBaseItemInfo =
+        (associatedTabContentType == TabContentType.albums && albumShowsYearAndDurationInstead)
         ? AdditionalBaseItemInfoTypes.none
-        : (additionalBaseItemInfos[itemType] ?? AdditionalBaseItemInfoTypes.adaptive);
+        : (additionalBaseItemInfos[associatedTabContentType] ?? AdditionalBaseItemInfoTypes.adaptive);
 
     SortBy? additionalInfoSortBy = switch (additionalBaseItemInfo) {
       AdditionalBaseItemInfoTypes.dateReleased => SortBy.premiereDate,

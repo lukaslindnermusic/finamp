@@ -18,25 +18,16 @@ class AdditionalBaseItemInfoTitleListTile extends ConsumerWidget {
 }
 
 class AdditionalBaseItemInfoDropdownListTile extends ConsumerWidget {
-  final BaseItemDtoType baseItemDtoType;
+  final TabContentType tabContentType;
 
-  const AdditionalBaseItemInfoDropdownListTile({required this.baseItemDtoType, super.key});
+  const AdditionalBaseItemInfoDropdownListTile({required this.tabContentType, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final additionalBaseItemInfos = ref.watch(finampSettingsProvider.additionalBaseItemInfo);
-    final currentType = additionalBaseItemInfos[baseItemDtoType] ?? AdditionalBaseItemInfoTypes.adaptive;
+    final currentType = additionalBaseItemInfos[tabContentType] ?? AdditionalBaseItemInfoTypes.adaptive;
 
-    final locTitle = switch (baseItemDtoType) {
-      BaseItemDtoType.track => AppLocalizations.of(context)!.tracks,
-      BaseItemDtoType.album => AppLocalizations.of(context)!.albums,
-      BaseItemDtoType.artist => AppLocalizations.of(context)!.artists,
-      BaseItemDtoType.playlist => AppLocalizations.of(context)!.playlists,
-      BaseItemDtoType.genre => AppLocalizations.of(context)!.genres,
-      _ => baseItemDtoType.idString,
-    };
-
-    // Filter dropdown items based on baseItemDtoType
+    // Filter dropdown items based on tabContentType
     final dropdownItems = AdditionalBaseItemInfoTypes.values.where((type) {
       if (type == AdditionalBaseItemInfoTypes.adaptive ||
           type == AdditionalBaseItemInfoTypes.dateAdded ||
@@ -44,15 +35,15 @@ class AdditionalBaseItemInfoDropdownListTile extends ConsumerWidget {
         return true;
       }
 
-      switch (baseItemDtoType) {
-        case BaseItemDtoType.track:
+      switch (tabContentType) {
+        case TabContentType.tracks:
           return type == AdditionalBaseItemInfoTypes.playCount ||
               type == AdditionalBaseItemInfoTypes.dateLastPlayed ||
               type == AdditionalBaseItemInfoTypes.dateReleased;
-        case BaseItemDtoType.album:
+        case TabContentType.albums:
           return type == AdditionalBaseItemInfoTypes.duration || type == AdditionalBaseItemInfoTypes.dateReleased;
-        case BaseItemDtoType.playlist:
-        case BaseItemDtoType.artist:
+        case TabContentType.playlists:
+        case TabContentType.artists:
           return type == AdditionalBaseItemInfoTypes.duration;
         default:
           return false;
@@ -60,7 +51,7 @@ class AdditionalBaseItemInfoDropdownListTile extends ConsumerWidget {
     }).toList();
 
     return ListTile(
-      title: Text(locTitle ?? "Unknown Item Type"),
+      title: Text(tabContentType.toLocalisedString(context)),
       trailing: DropdownButton<AdditionalBaseItemInfoTypes>(
         value: currentType,
         items: dropdownItems
@@ -70,10 +61,10 @@ class AdditionalBaseItemInfoDropdownListTile extends ConsumerWidget {
             .toList(),
         onChanged: (value) {
           if (value != null) {
-            final newAdditionalBaseItemInfos = Map<BaseItemDtoType, AdditionalBaseItemInfoTypes>.from(
+            final newAdditionalBaseItemInfos = Map<TabContentType, AdditionalBaseItemInfoTypes>.from(
               additionalBaseItemInfos,
             );
-            newAdditionalBaseItemInfos[baseItemDtoType] = value;
+            newAdditionalBaseItemInfos[tabContentType] = value;
             FinampSetters.setAdditionalBaseItemInfo(newAdditionalBaseItemInfos);
           }
         },

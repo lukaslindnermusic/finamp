@@ -42,11 +42,7 @@ class _CustomizationSettingsScreenState extends State<CustomizationSettingsScree
           const OneLineMarqueeTextSwitch(),
           const ReleaseDateFormatDropdownListTile(),
           const AdditionalBaseItemInfoTitleListTile(),
-          const AdditionalBaseItemInfoDropdownListTile(baseItemDtoType: BaseItemDtoType.track),
-          const AdditionalBaseItemInfoDropdownListTile(baseItemDtoType: BaseItemDtoType.album),
-          const AdditionalBaseItemInfoDropdownListTile(baseItemDtoType: BaseItemDtoType.artist),
-          const AdditionalBaseItemInfoDropdownListTile(baseItemDtoType: BaseItemDtoType.playlist),
-          const AdditionalBaseItemInfoDropdownListTile(baseItemDtoType: BaseItemDtoType.genre),
+          ...TabContentType.values.map((type) => AdditionalBaseItemInfoDropdownListTile(tabContentType: type)),
         ],
       ),
     );

@@ -1011,7 +1011,7 @@ extension FinampSetters on FinampSettingsHelper {
   }
 
   static void setAdditionalBaseItemInfo(
-    Map<BaseItemDtoType, AdditionalBaseItemInfoTypes> newAdditionalBaseItemInfo,
+    Map<TabContentType, AdditionalBaseItemInfoTypes> newAdditionalBaseItemInfo,
   ) {
     FinampSettings finampSettingsTemp = FinampSettingsHelper.finampSettings;
     finampSettingsTemp.additionalBaseItemInfo = newAdditionalBaseItemInfo;
@@ -1387,7 +1387,7 @@ extension FinampSettingsProviderSelectors on StreamProvider<FinampSettings> {
       );
   ProviderListenable<bool> get useHighContrastColors => finampSettingsProvider
       .select((value) => value.requireValue.useHighContrastColors);
-  ProviderListenable<Map<BaseItemDtoType, AdditionalBaseItemInfoTypes>>
+  ProviderListenable<Map<TabContentType, AdditionalBaseItemInfoTypes>>
   get additionalBaseItemInfo => finampSettingsProvider.select(
     (value) => value.requireValue.additionalBaseItemInfo,
   );

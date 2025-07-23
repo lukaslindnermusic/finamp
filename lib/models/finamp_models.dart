@@ -220,11 +220,11 @@ class DefaultSettings {
   static const clearQueueOnStopEvent = false;
   static const useHighContrastColors = false;
   static const additionalBaseItemInfo = {
-    BaseItemDtoType.track: AdditionalBaseItemInfoTypes.adaptive,
-    BaseItemDtoType.album: AdditionalBaseItemInfoTypes.adaptive,
-    BaseItemDtoType.artist: AdditionalBaseItemInfoTypes.adaptive,
-    BaseItemDtoType.playlist: AdditionalBaseItemInfoTypes.adaptive,
-    BaseItemDtoType.genre: AdditionalBaseItemInfoTypes.adaptive,
+    TabContentType.tracks: AdditionalBaseItemInfoTypes.adaptive,
+    TabContentType.albums: AdditionalBaseItemInfoTypes.adaptive,
+    TabContentType.artists: AdditionalBaseItemInfoTypes.adaptive,
+    TabContentType.playlists: AdditionalBaseItemInfoTypes.adaptive,
+    TabContentType.genres: AdditionalBaseItemInfoTypes.adaptive,
   };
 }
 
@@ -724,7 +724,7 @@ class FinampSettings {
   bool useHighContrastColors;
 
   @HiveField(121, defaultValue: DefaultSettings.additionalBaseItemInfo)
-  Map<BaseItemDtoType, AdditionalBaseItemInfoTypes> additionalBaseItemInfo;
+  Map<TabContentType, AdditionalBaseItemInfoTypes> additionalBaseItemInfo;
 
   static Future<FinampSettings> create() async {
     final downloadLocation = await DownloadLocation.create(

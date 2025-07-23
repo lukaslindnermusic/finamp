@@ -385,14 +385,14 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
             : fields[120] as bool,
         additionalBaseItemInfo: fields[121] == null
             ? {
-                BaseItemDtoType.track: AdditionalBaseItemInfoTypes.adaptive,
-                BaseItemDtoType.album: AdditionalBaseItemInfoTypes.adaptive,
-                BaseItemDtoType.artist: AdditionalBaseItemInfoTypes.adaptive,
-                BaseItemDtoType.playlist: AdditionalBaseItemInfoTypes.adaptive,
-                BaseItemDtoType.genre: AdditionalBaseItemInfoTypes.adaptive,
+                TabContentType.tracks: AdditionalBaseItemInfoTypes.adaptive,
+                TabContentType.albums: AdditionalBaseItemInfoTypes.adaptive,
+                TabContentType.artists: AdditionalBaseItemInfoTypes.adaptive,
+                TabContentType.playlists: AdditionalBaseItemInfoTypes.adaptive,
+                TabContentType.genres: AdditionalBaseItemInfoTypes.adaptive,
               }
             : (fields[121] as Map)
-                  .cast<BaseItemDtoType, AdditionalBaseItemInfoTypes>(),
+                  .cast<TabContentType, AdditionalBaseItemInfoTypes>(),
       )
       ..disableGesture = fields[19] == null ? false : fields[19] as bool
       ..showFastScroller = fields[25] == null ? true : fields[25] as bool
