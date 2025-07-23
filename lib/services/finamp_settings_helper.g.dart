@@ -1002,6 +1002,14 @@ extension FinampSetters on FinampSettingsHelper {
     ).put("FinampSettings", finampSettingsTemp);
   }
 
+  static void setUseHighContrastColors(bool newUseHighContrastColors) {
+    FinampSettings finampSettingsTemp = FinampSettingsHelper.finampSettings;
+    finampSettingsTemp.useHighContrastColors = newUseHighContrastColors;
+    Hive.box<FinampSettings>(
+      "FinampSettings",
+    ).put("FinampSettings", finampSettingsTemp);
+  }
+
   static void setAdditionalBaseItemInfo(
     Map<BaseItemDtoType, AdditionalBaseItemInfoTypes> newAdditionalBaseItemInfo,
   ) {
@@ -1377,6 +1385,8 @@ extension FinampSettingsProviderSelectors on StreamProvider<FinampSettings> {
       finampSettingsProvider.select(
         (value) => value.requireValue.syncPlaybackSpeedAndPitch,
       );
+  ProviderListenable<bool> get useHighContrastColors => finampSettingsProvider
+      .select((value) => value.requireValue.useHighContrastColors);
   ProviderListenable<Map<BaseItemDtoType, AdditionalBaseItemInfoTypes>>
   get additionalBaseItemInfo => finampSettingsProvider.select(
     (value) => value.requireValue.additionalBaseItemInfo,

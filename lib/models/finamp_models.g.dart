@@ -380,7 +380,10 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
         clearQueueOnStopEvent: fields[117] == null
             ? false
             : fields[117] as bool,
-        additionalBaseItemInfo: fields[120] == null
+        useHighContrastColors: fields[120] == null
+            ? false
+            : fields[120] as bool,
+        additionalBaseItemInfo: fields[121] == null
             ? {
                 BaseItemDtoType.track: AdditionalBaseItemInfoTypes.adaptive,
                 BaseItemDtoType.album: AdditionalBaseItemInfoTypes.adaptive,
@@ -388,7 +391,7 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
                 BaseItemDtoType.playlist: AdditionalBaseItemInfoTypes.adaptive,
                 BaseItemDtoType.genre: AdditionalBaseItemInfoTypes.adaptive,
               }
-            : (fields[120] as Map)
+            : (fields[121] as Map)
                   .cast<BaseItemDtoType, AdditionalBaseItemInfoTypes>(),
       )
       ..disableGesture = fields[19] == null ? false : fields[19] as bool
@@ -401,7 +404,7 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
   @override
   void write(BinaryWriter writer, FinampSettings obj) {
     writer
-      ..writeByte(114)
+      ..writeByte(115)
       ..writeByte(0)
       ..write(obj.isOffline)
       ..writeByte(1)
@@ -629,6 +632,8 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
       ..writeByte(119)
       ..write(obj.syncPlaybackSpeedAndPitch)
       ..writeByte(120)
+      ..write(obj.useHighContrastColors)
+      ..writeByte(121)
       ..write(obj.additionalBaseItemInfo);
   }
 

@@ -218,6 +218,7 @@ class DefaultSettings {
   static const playlistTracksSortOrder = SortOrder.ascending;
   static const genreFilterPlaylists = false;
   static const clearQueueOnStopEvent = false;
+  static const useHighContrastColors = false;
   static const additionalBaseItemInfo = {
     BaseItemDtoType.track: AdditionalBaseItemInfoTypes.adaptive,
     BaseItemDtoType.album: AdditionalBaseItemInfoTypes.adaptive,
@@ -343,6 +344,7 @@ class FinampSettings {
     this.playlistTracksSortOrder = DefaultSettings.playlistTracksSortOrder,
     this.genreFilterPlaylists = DefaultSettings.genreFilterPlaylists,
     this.clearQueueOnStopEvent = DefaultSettings.clearQueueOnStopEvent,
+    this.useHighContrastColors = DefaultSettings.useHighContrastColors,
     this.additionalBaseItemInfo = DefaultSettings.additionalBaseItemInfo,
   });
 
@@ -718,7 +720,10 @@ class FinampSettings {
   @HiveField(119, defaultValue: DefaultSettings.syncPlaybackSpeedAndPitch)
   bool syncPlaybackSpeedAndPitch;
 
-  @HiveField(120, defaultValue: DefaultSettings.additionalBaseItemInfo)
+  @HiveField(120, defaultValue: DefaultSettings.useHighContrastColors)
+  bool useHighContrastColors;
+
+  @HiveField(121, defaultValue: DefaultSettings.additionalBaseItemInfo)
   Map<BaseItemDtoType, AdditionalBaseItemInfoTypes> additionalBaseItemInfo;
 
   static Future<FinampSettings> create() async {
