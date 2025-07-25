@@ -101,17 +101,19 @@ class ItemCollectionListTile extends ConsumerWidget {
       associatedTabContentType = null;
     }
 
-    final additionalBaseItemInfos = ref.watch(finampSettingsProvider.additionalBaseItemInfo);
-    final additionalBaseItemInfo =
+    final tileAdditionalInfos = associatedTabContentType != null
+        ? ref.watch(finampSettingsProvider.tileAdditionalInfo(associatedTabContentType))
+        : null;
+    final tileAdditionalInfo =
         (associatedTabContentType == TabContentType.albums && albumShowsYearAndDurationInstead)
-        ? AdditionalBaseItemInfoTypes.none
-        : (additionalBaseItemInfos[associatedTabContentType] ?? AdditionalBaseItemInfoTypes.adaptive);
+        ? TileAdditionalInfoType.none
+        : (tileAdditionalInfos ?? TileAdditionalInfoType.adaptive);
 
-    SortBy? additionalInfoSortBy = switch (additionalBaseItemInfo) {
-      AdditionalBaseItemInfoTypes.dateReleased => SortBy.premiereDate,
-      AdditionalBaseItemInfoTypes.dateAdded => SortBy.dateCreated,
-      AdditionalBaseItemInfoTypes.duration => SortBy.runtime,
-      AdditionalBaseItemInfoTypes.none => null,
+    SortBy? additionalInfoSortBy = switch (tileAdditionalInfo) {
+      TileAdditionalInfoType.dateReleased => SortBy.premiereDate,
+      TileAdditionalInfoType.dateAdded => SortBy.dateCreated,
+      TileAdditionalInfoType.duration => SortBy.runtime,
+      TileAdditionalInfoType.none => null,
       _ => adaptiveAdditionalInfoSortBy,
     };
 

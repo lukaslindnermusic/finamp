@@ -1010,11 +1010,12 @@ extension FinampSetters on FinampSettingsHelper {
     ).put("FinampSettings", finampSettingsTemp);
   }
 
-  static void setAdditionalBaseItemInfo(
-    Map<TabContentType, AdditionalBaseItemInfoTypes> newAdditionalBaseItemInfo,
+  static void setTileAdditionalInfo(
+    TabContentType tabContentType,
+    TileAdditionalInfoType tileAdditionalInfo,
   ) {
     FinampSettings finampSettingsTemp = FinampSettingsHelper.finampSettings;
-    finampSettingsTemp.additionalBaseItemInfo = newAdditionalBaseItemInfo;
+    finampSettingsTemp.tileAdditionalInfo[tabContentType] = tileAdditionalInfo;
     Hive.box<FinampSettings>(
       "FinampSettings",
     ).put("FinampSettings", finampSettingsTemp);
@@ -1387,9 +1388,10 @@ extension FinampSettingsProviderSelectors on StreamProvider<FinampSettings> {
       );
   ProviderListenable<bool> get useHighContrastColors => finampSettingsProvider
       .select((value) => value.requireValue.useHighContrastColors);
-  ProviderListenable<Map<TabContentType, AdditionalBaseItemInfoTypes>>
-  get additionalBaseItemInfo => finampSettingsProvider.select(
-    (value) => value.requireValue.additionalBaseItemInfo,
+  ProviderListenable<TileAdditionalInfoType?> tileAdditionalInfo(
+    TabContentType tabContentType,
+  ) => finampSettingsProvider.select(
+    (value) => value.requireValue.tileAdditionalInfo[tabContentType],
   );
   ProviderListenable<DownloadProfile> get downloadTranscodingProfile =>
       finampSettingsProvider.select(

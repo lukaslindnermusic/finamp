@@ -63,7 +63,7 @@ class FinampSettingsHelper {
     finampSettingsTemp.showStopButtonOnMediaNotification = DefaultSettings.showStopButtonOnMediaNotification;
     finampSettingsTemp.showSeekControlsOnMediaNotification = DefaultSettings.showSeekControlsOnMediaNotification;
     finampSettingsTemp.oneLineMarqueeTextButton = DefaultSettings.oneLineMarqueeTextButton;
-    finampSettingsTemp.additionalBaseItemInfo = DefaultSettings.additionalBaseItemInfo;
+    finampSettingsTemp.tileAdditionalInfo = DefaultSettings.tileAdditionalInfo;
 
     Hive.box<FinampSettings>("FinampSettings").put("FinampSettings", finampSettingsTemp);
   }

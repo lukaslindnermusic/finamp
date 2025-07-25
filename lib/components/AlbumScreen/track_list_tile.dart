@@ -602,25 +602,26 @@ class TrackListItemTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final highlightTrack = isCurrentTrack && highlightCurrentTrack;
     final isOnDesktop = Platform.isMacOS || Platform.isWindows || Platform.isLinux;
-    final isOffline = ref.watch(finampSettingsProvider.isOffline);
-    final additionalBaseItemInfos = ref.watch(finampSettingsProvider.additionalBaseItemInfo);
-    final additionalBaseItemInfo =
-        (isOffline &&
-            (additionalBaseItemInfos[TabContentType.tracks] == AdditionalBaseItemInfoTypes.dateLastPlayed ||
-                additionalBaseItemInfos[TabContentType.tracks] == AdditionalBaseItemInfoTypes.playCount))
-        ? AdditionalBaseItemInfoTypes.none
-        : (additionalBaseItemInfos[TabContentType.tracks] ?? AdditionalBaseItemInfoTypes.adaptive);
+    final tileAdditionalInfo =
+        ref.watch(finampSettingsProvider.tileAdditionalInfo(TabContentType.tracks)) ?? TileAdditionalInfoType.adaptive;
 
-    bool showPlayCount = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.playCount;
-    bool showReleaseDate = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateReleased;
-    bool showDateAdded = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateAdded;
-    bool showDateLastPlayed = additionalBaseItemInfo == AdditionalBaseItemInfoTypes.dateLastPlayed;
+    bool showPlayCount = tileAdditionalInfo == TileAdditionalInfoType.playCount;
+    bool showReleaseDate = tileAdditionalInfo == TileAdditionalInfoType.dateReleased;
+    bool showDateAdded = tileAdditionalInfo == TileAdditionalInfoType.dateAdded;
+    bool showDateLastPlayed = tileAdditionalInfo == TileAdditionalInfoType.dateLastPlayed;
 
-    if (additionalBaseItemInfo == AdditionalBaseItemInfoTypes.adaptive) {
+    if (tileAdditionalInfo == TileAdditionalInfoType.adaptive) {
       showPlayCount = showPlayCount || adaptiveAdditionalInfoSortBy == SortBy.playCount;
       showReleaseDate = showReleaseDate || adaptiveAdditionalInfoSortBy == SortBy.premiereDate;
       showDateAdded = showDateAdded || adaptiveAdditionalInfoSortBy == SortBy.dateCreated;
       showDateLastPlayed = showDateLastPlayed || adaptiveAdditionalInfoSortBy == SortBy.datePlayed;
+    }
+
+    if (showPlayCount || showDateLastPlayed) {
+      if (ref.watch(finampSettingsProvider.isOffline)) {
+        showPlayCount = false;
+        showDateLastPlayed = false;
+      }
     }
 
     final bool secondRowNeeded =

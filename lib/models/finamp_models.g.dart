@@ -383,16 +383,16 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
         useHighContrastColors: fields[120] == null
             ? false
             : fields[120] as bool,
-        additionalBaseItemInfo: fields[121] == null
+        tileAdditionalInfo: fields[121] == null
             ? {
-                TabContentType.tracks: AdditionalBaseItemInfoTypes.adaptive,
-                TabContentType.albums: AdditionalBaseItemInfoTypes.adaptive,
-                TabContentType.artists: AdditionalBaseItemInfoTypes.adaptive,
-                TabContentType.playlists: AdditionalBaseItemInfoTypes.adaptive,
-                TabContentType.genres: AdditionalBaseItemInfoTypes.adaptive,
+                TabContentType.tracks: TileAdditionalInfoType.adaptive,
+                TabContentType.albums: TileAdditionalInfoType.adaptive,
+                TabContentType.artists: TileAdditionalInfoType.adaptive,
+                TabContentType.playlists: TileAdditionalInfoType.adaptive,
+                TabContentType.genres: TileAdditionalInfoType.adaptive,
               }
             : (fields[121] as Map)
-                  .cast<TabContentType, AdditionalBaseItemInfoTypes>(),
+                  .cast<TabContentType, TileAdditionalInfoType>(),
       )
       ..disableGesture = fields[19] == null ? false : fields[19] as bool
       ..showFastScroller = fields[25] == null ? true : fields[25] as bool
@@ -634,7 +634,7 @@ class FinampSettingsAdapter extends TypeAdapter<FinampSettings> {
       ..writeByte(120)
       ..write(obj.useHighContrastColors)
       ..writeByte(121)
-      ..write(obj.additionalBaseItemInfo);
+      ..write(obj.tileAdditionalInfo);
   }
 
   @override
@@ -2723,49 +2723,49 @@ class SleepTimerTypeAdapter extends TypeAdapter<SleepTimerType> {
           typeId == other.typeId;
 }
 
-class AdditionalBaseItemInfoTypesAdapter
-    extends TypeAdapter<AdditionalBaseItemInfoTypes> {
+class TileAdditionalInfoTypeAdapter
+    extends TypeAdapter<TileAdditionalInfoType> {
   @override
   final typeId = 100;
 
   @override
-  AdditionalBaseItemInfoTypes read(BinaryReader reader) {
+  TileAdditionalInfoType read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return AdditionalBaseItemInfoTypes.adaptive;
+        return TileAdditionalInfoType.adaptive;
       case 1:
-        return AdditionalBaseItemInfoTypes.dateAdded;
+        return TileAdditionalInfoType.dateAdded;
       case 2:
-        return AdditionalBaseItemInfoTypes.dateReleased;
+        return TileAdditionalInfoType.dateReleased;
       case 3:
-        return AdditionalBaseItemInfoTypes.duration;
+        return TileAdditionalInfoType.duration;
       case 4:
-        return AdditionalBaseItemInfoTypes.playCount;
+        return TileAdditionalInfoType.playCount;
       case 5:
-        return AdditionalBaseItemInfoTypes.dateLastPlayed;
+        return TileAdditionalInfoType.dateLastPlayed;
       case 6:
-        return AdditionalBaseItemInfoTypes.none;
+        return TileAdditionalInfoType.none;
       default:
-        return AdditionalBaseItemInfoTypes.adaptive;
+        return TileAdditionalInfoType.adaptive;
     }
   }
 
   @override
-  void write(BinaryWriter writer, AdditionalBaseItemInfoTypes obj) {
+  void write(BinaryWriter writer, TileAdditionalInfoType obj) {
     switch (obj) {
-      case AdditionalBaseItemInfoTypes.adaptive:
+      case TileAdditionalInfoType.adaptive:
         writer.writeByte(0);
-      case AdditionalBaseItemInfoTypes.dateAdded:
+      case TileAdditionalInfoType.dateAdded:
         writer.writeByte(1);
-      case AdditionalBaseItemInfoTypes.dateReleased:
+      case TileAdditionalInfoType.dateReleased:
         writer.writeByte(2);
-      case AdditionalBaseItemInfoTypes.duration:
+      case TileAdditionalInfoType.duration:
         writer.writeByte(3);
-      case AdditionalBaseItemInfoTypes.playCount:
+      case TileAdditionalInfoType.playCount:
         writer.writeByte(4);
-      case AdditionalBaseItemInfoTypes.dateLastPlayed:
+      case TileAdditionalInfoType.dateLastPlayed:
         writer.writeByte(5);
-      case AdditionalBaseItemInfoTypes.none:
+      case TileAdditionalInfoType.none:
         writer.writeByte(6);
     }
   }
@@ -2776,7 +2776,7 @@ class AdditionalBaseItemInfoTypesAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AdditionalBaseItemInfoTypesAdapter &&
+      other is TileAdditionalInfoTypeAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

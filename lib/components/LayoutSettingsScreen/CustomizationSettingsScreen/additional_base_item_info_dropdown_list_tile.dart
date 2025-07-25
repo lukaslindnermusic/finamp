@@ -24,48 +24,28 @@ class AdditionalBaseItemInfoDropdownListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final additionalBaseItemInfos = ref.watch(finampSettingsProvider.additionalBaseItemInfo);
-    final currentType = additionalBaseItemInfos[tabContentType] ?? AdditionalBaseItemInfoTypes.adaptive;
+    final tileAdditionalInfo = ref.watch(finampSettingsProvider.tileAdditionalInfo(tabContentType));
+    final currentType = tileAdditionalInfo ?? TileAdditionalInfoType.adaptive;
 
     // Filter dropdown items based on tabContentType
-    final dropdownItems = AdditionalBaseItemInfoTypes.values.where((type) {
-      if (type == AdditionalBaseItemInfoTypes.adaptive ||
-          type == AdditionalBaseItemInfoTypes.dateAdded ||
-          type == AdditionalBaseItemInfoTypes.none) {
-        return true;
-      }
-
-      switch (tabContentType) {
-        case TabContentType.tracks:
-          return type == AdditionalBaseItemInfoTypes.playCount ||
-              type == AdditionalBaseItemInfoTypes.dateLastPlayed ||
-              type == AdditionalBaseItemInfoTypes.dateReleased;
-        case TabContentType.albums:
-          return type == AdditionalBaseItemInfoTypes.duration || type == AdditionalBaseItemInfoTypes.dateReleased;
-        case TabContentType.playlists:
-        case TabContentType.artists:
-          return type == AdditionalBaseItemInfoTypes.duration;
-        default:
-          return false;
-      }
-    }).toList();
+    final dropdownItems = [
+      TileAdditionalInfoType.adaptive,
+      TileAdditionalInfoType.dateAdded,
+      if ([TabContentType.artists, TabContentType.playlists].contains(tabContentType)) TileAdditionalInfoType.duration,
+    ];
 
     return ListTile(
       title: Text(tabContentType.toLocalisedString(context)),
-      trailing: DropdownButton<AdditionalBaseItemInfoTypes>(
+      trailing: DropdownButton<TileAdditionalInfoType>(
         value: currentType,
         items: dropdownItems
             .map(
-              (e) => DropdownMenuItem<AdditionalBaseItemInfoTypes>(value: e, child: Text(e.toLocalisedString(context))),
+              (e) => DropdownMenuItem<TileAdditionalInfoType>(value: e, child: Text(e.toLocalisedString(context))),
             )
             .toList(),
         onChanged: (value) {
           if (value != null) {
-            final newAdditionalBaseItemInfos = Map<TabContentType, AdditionalBaseItemInfoTypes>.from(
-              additionalBaseItemInfos,
-            );
-            newAdditionalBaseItemInfos[tabContentType] = value;
-            FinampSetters.setAdditionalBaseItemInfo(newAdditionalBaseItemInfos);
+            FinampSetters.setTileAdditionalInfo(tabContentType, value);
           }
         },
       ),

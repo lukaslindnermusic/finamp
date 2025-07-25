@@ -219,12 +219,12 @@ class DefaultSettings {
   static const genreFilterPlaylists = false;
   static const clearQueueOnStopEvent = false;
   static const useHighContrastColors = false;
-  static const additionalBaseItemInfo = {
-    TabContentType.tracks: AdditionalBaseItemInfoTypes.adaptive,
-    TabContentType.albums: AdditionalBaseItemInfoTypes.adaptive,
-    TabContentType.artists: AdditionalBaseItemInfoTypes.adaptive,
-    TabContentType.playlists: AdditionalBaseItemInfoTypes.adaptive,
-    TabContentType.genres: AdditionalBaseItemInfoTypes.adaptive,
+  static const tileAdditionalInfo = {
+    TabContentType.tracks: TileAdditionalInfoType.adaptive,
+    TabContentType.albums: TileAdditionalInfoType.adaptive,
+    TabContentType.artists: TileAdditionalInfoType.adaptive,
+    TabContentType.playlists: TileAdditionalInfoType.adaptive,
+    TabContentType.genres: TileAdditionalInfoType.adaptive,
   };
 }
 
@@ -345,7 +345,7 @@ class FinampSettings {
     this.genreFilterPlaylists = DefaultSettings.genreFilterPlaylists,
     this.clearQueueOnStopEvent = DefaultSettings.clearQueueOnStopEvent,
     this.useHighContrastColors = DefaultSettings.useHighContrastColors,
-    this.additionalBaseItemInfo = DefaultSettings.additionalBaseItemInfo,
+    this.tileAdditionalInfo = DefaultSettings.tileAdditionalInfo,
   });
 
   @HiveField(0, defaultValue: DefaultSettings.isOffline)
@@ -723,8 +723,9 @@ class FinampSettings {
   @HiveField(120, defaultValue: DefaultSettings.useHighContrastColors)
   bool useHighContrastColors;
 
-  @HiveField(121, defaultValue: DefaultSettings.additionalBaseItemInfo)
-  Map<TabContentType, AdditionalBaseItemInfoTypes> additionalBaseItemInfo;
+  @HiveField(121, defaultValue: DefaultSettings.tileAdditionalInfo)
+  @SettingsHelperMap("tabContentType", "tileAdditionalInfo")
+  Map<TabContentType, TileAdditionalInfoType> tileAdditionalInfo;
 
   static Future<FinampSettings> create() async {
     final downloadLocation = await DownloadLocation.create(
@@ -3280,7 +3281,7 @@ enum SleepTimerType {
 }
 
 @HiveType(typeId: 100)
-enum AdditionalBaseItemInfoTypes {
+enum TileAdditionalInfoType {
   @HiveField(0)
   adaptive,
   @HiveField(1)
@@ -3303,40 +3304,40 @@ enum AdditionalBaseItemInfoTypes {
 
   String toLocalisedString(BuildContext context) => _humanReadableLocalisedName(this, context);
 
-  String _humanReadableName(AdditionalBaseItemInfoTypes additionalInfoType) {
+  String _humanReadableName(TileAdditionalInfoType additionalInfoType) {
     switch (additionalInfoType) {
-      case AdditionalBaseItemInfoTypes.adaptive:
+      case TileAdditionalInfoType.adaptive:
         return "Adaptive";
-      case AdditionalBaseItemInfoTypes.dateAdded:
+      case TileAdditionalInfoType.dateAdded:
         return "Date Added";
-      case AdditionalBaseItemInfoTypes.dateReleased:
+      case TileAdditionalInfoType.dateReleased:
         return "Release Date";
-      case AdditionalBaseItemInfoTypes.duration:
+      case TileAdditionalInfoType.duration:
         return "Duration";
-      case AdditionalBaseItemInfoTypes.playCount:
+      case TileAdditionalInfoType.playCount:
         return "Play Count";
-      case AdditionalBaseItemInfoTypes.dateLastPlayed:
+      case TileAdditionalInfoType.dateLastPlayed:
         return "Date Last Played";
-      case AdditionalBaseItemInfoTypes.none:
+      case TileAdditionalInfoType.none:
         return "None";
     }
   }
 
-  String _humanReadableLocalisedName(AdditionalBaseItemInfoTypes additionalInfoType, BuildContext context) {
+  String _humanReadableLocalisedName(TileAdditionalInfoType additionalInfoType, BuildContext context) {
     switch (additionalInfoType) {
-      case AdditionalBaseItemInfoTypes.adaptive:
+      case TileAdditionalInfoType.adaptive:
         return AppLocalizations.of(context)!.adaptive;
-      case AdditionalBaseItemInfoTypes.dateAdded:
+      case TileAdditionalInfoType.dateAdded:
         return AppLocalizations.of(context)!.dateAdded;
-      case AdditionalBaseItemInfoTypes.dateReleased:
+      case TileAdditionalInfoType.dateReleased:
         return AppLocalizations.of(context)!.premiereDate;
-      case AdditionalBaseItemInfoTypes.duration:
+      case TileAdditionalInfoType.duration:
         return AppLocalizations.of(context)!.duration;
-      case AdditionalBaseItemInfoTypes.playCount:
+      case TileAdditionalInfoType.playCount:
         return AppLocalizations.of(context)!.playCount;
-      case AdditionalBaseItemInfoTypes.dateLastPlayed:
+      case TileAdditionalInfoType.dateLastPlayed:
         return AppLocalizations.of(context)!.datePlayed;
-      case AdditionalBaseItemInfoTypes.none:
+      case TileAdditionalInfoType.none:
         return AppLocalizations.of(context)!.none;
     }
   }
